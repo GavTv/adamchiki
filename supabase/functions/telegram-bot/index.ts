@@ -31,7 +31,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    const messageText = `📋 Новая заявка!\n\n🔹 Услуга: ${service}\n👤 Имя: ${name || "Не указано"}\n📞 Телефон: ${phone}\n📅 Дата: ${date}\n💬 Комментарий: ${comment || "Нет"}`;
+    const messageText = `📋 Новая заявка!\n\n🔹 Услуга: ${service}\n\n👤 Имя: ${name || "Не указано"}\n\n📞 Телефон: ${phone}\n\n📅 Дата: ${date}\n\n💬 Комментарий: ${comment || "Нет"}`;
 
     const response = await fetch(TELEGRAM_API_URL, {
       method: "POST",
