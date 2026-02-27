@@ -18,7 +18,7 @@ const facePeelings = [
   { name: "Миндальный", price: "2000 ₽" },
   { name: "Кислотный", price: "2500 ₽" },
   { name: "Джесснер", price: "3000 ₽" },
-  { name: "BioRePeel, PRX", price: "3500 ₽" },
+  { name: "BioRePeel, PRX", price: "4000 ₽" },
 ];
 
 
@@ -44,7 +44,7 @@ const faceCare = [
   { name: "Аква Пилинг", price: "от 3500 ₽" },
   { name: "Карбокситерапия", price: "от 3500 ₽" },
   { name: "Уход лица Angiopharm", price: "3500 ₽" },
-  { name: "Уход для ULTRACEUTICALS", price: "5500 ₽" },
+  { name: "Уход ULTRACEUTICALS", price: "5500 ₽" },
   { name: "Массаж лица", price: "от 2500 ₽" },
 ];
 
