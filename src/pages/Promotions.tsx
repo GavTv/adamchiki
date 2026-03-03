@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
 import { Gift } from "lucide-react";
@@ -43,6 +44,11 @@ const promotions = [
 const Promotions = () => {
   return (
     <Layout>
+      <SEO
+        title="Акции"
+        description="Акции и скидки салона красоты Novobeauty. Специальные предложения на косметологию, LPG массаж, парикмахерские услуги."
+        keywords="акции салон красоты, скидки косметология, акции LPG массаж, скидки парикмахерская, москва"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-12">

@@ -1,10 +1,66 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import landingBg from "@/assets/landing-bg.jpg";
+import SEO from "@/components/SEO";
 
 const Landing = () => {
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col">
+      <SEO
+        title="Главная"
+        description="Novobeauty — салон красоты премиум класса в Москве на Новослободской. Косметология, парикмахерские услуги, LPG массаж, солярий."
+        keywords="салон красоты москва, косметология, парикмахерская, LPG массаж, солярий, Новослободская"
+        canonical="https://novobeauty.ru/"
+      />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BeautySalon",
+            "name": "Novobeauty",
+            "image": "https://novobeauty.ru/og-image.jpg",
+            "url": "https://novobeauty.ru",
+            "telephone": "+79850534761",
+            "email": "info@novobeauty.ru",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "ул. Новослободская, д. 3, 3 этаж (БЦ Сафа)",
+              "addressLocality": "Москва",
+              "addressCountry": "RU"
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "opens": "10:00",
+                "closes": "21:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Sunday",
+                "opens": "11:00",
+                "closes": "19:00"
+              }
+            ],
+            "priceRange": "₽₽",
+            "sameAs": [
+              "https://www.instagram.com/salon.novobeauty",
+              "https://t.me/Novobeauty"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Услуги салона красоты",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Солярий" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Парикмахерские услуги" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Косметология" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "LPG массаж" } }
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
       {/* Background image */}
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"

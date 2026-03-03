@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
@@ -51,6 +52,11 @@ const faceCare = [
 const Cosmetology = () => {
   return (
     <Layout>
+      <SEO
+        title="Косметология"
+        description="Косметологические услуги в Novobeauty: пилинги, чистка лица, мезотерапия, биоревитализация, уходы Ultraceuticals. Запись к косметологу."
+        keywords="косметолог москва, пилинг, чистка лица, мезотерапия, биоревитализация, BioRePeel, уход за лицом, Новослободская"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-12">
