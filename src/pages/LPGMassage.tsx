@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
@@ -77,6 +78,11 @@ const benefits = [
 const LPGMassage = () => {
   return (
     <Layout>
+      <SEO
+        title="LPG массаж"
+        description="LPG массаж в Novobeauty: коррекция фигуры, антицеллюлитный массаж, лимфодренаж. Видимый результат после первых процедур. Цены от 1000 ₽."
+        keywords="LPG массаж москва, антицеллюлитный массаж, коррекция фигуры, лимфодренаж, аппаратный массаж, Новослободская"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-12">

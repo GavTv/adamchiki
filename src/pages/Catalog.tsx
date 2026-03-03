@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import landingBg from "@/assets/landing-bg.jpg";
+import SEO from "@/components/SEO";
 
 const menuItems = [
   { path: "/services", label: "Солярий" },
@@ -15,6 +16,11 @@ const menuItems = [
 const Catalog = () => {
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col">
+      <SEO
+        title="Каталог услуг"
+        description="Каталог услуг салона Novobeauty: солярий, парикмахерские услуги, косметология, LPG массаж. Полный прайс-лист и запись онлайн."
+        keywords="каталог услуг салон красоты, солярий москва, парикмахерские услуги, косметология, LPG массаж, прайс-лист"
+      />
       {/* Background image */}
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"

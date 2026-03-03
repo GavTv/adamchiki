@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import AnimatedSection from "@/components/AnimatedSection";
 import { motion } from "framer-motion";
 import { Sun, Scissors, Palette, Droplet, Sparkles, Eye, Heart, Zap } from "lucide-react";
@@ -158,6 +159,11 @@ const packages = [
 const Prices = () => {
   return (
     <Layout>
+      <SEO
+        title="Цены"
+        description="Цены на все услуги салона Novobeauty: солярий, стрижки, окрашивание, косметология, LPG массаж. Полный прайс-лист."
+        keywords="цены салон красоты, прайс-лист, стоимость услуг, солярий цены, стрижка цена, косметология цены, москва"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-12">

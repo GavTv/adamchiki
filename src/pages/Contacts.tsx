@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
@@ -47,6 +48,11 @@ const socialLinks = [
 const Contacts = () => {
   return (
     <Layout>
+      <SEO
+        title="Контакты"
+        description="Контакты салона красоты Novobeauty. Адрес: Москва, ул. Новослободская, д. 3, 3 этаж. Телефон: +7 985 053 4761. Режим работы и схема проезда."
+        keywords="салон красоты Новослободская, адрес, контакты, телефон, как добраться, схема проезда"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-12">

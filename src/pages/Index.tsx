@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
@@ -29,6 +30,11 @@ const features = [
 const Index = () => {
   return (
     <Layout>
+      <SEO
+        title="Солярий"
+        description="Солярий в салоне Novobeauty на Новослободской. Современное оборудование, безопасный загар, доступные цены от 50 ₽/мин. Запись онлайн."
+        keywords="солярий москва, солярий Новослободская, загар, солярий цены, студия загара"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero Section */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-16">

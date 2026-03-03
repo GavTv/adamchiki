@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
@@ -62,6 +63,11 @@ const ServiceList = ({ items }: { items: { name: string; price: string }[] }) =>
 const Hairdressing = () => {
   return (
     <Layout>
+      <SEO
+        title="Парикмахерские услуги"
+        description="Парикмахерские услуги в Novobeauty: стрижки, окрашивание, мелирование, кератиновое выпрямление. Опытные мастера, доступные цены."
+        keywords="парикмахерская москва, стрижка, окрашивание волос, мелирование, кератиновое выпрямление, укладка, Новослободская"
+      />
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-12">
