@@ -10,6 +10,7 @@ const menuItems = [
   { path: "/lpg-massage", label: "LPG массаж" },
   { path: "/prices", label: "Цены" },
   { path: "/promotions", label: "Акции" },
+  { path: "/march8", label: "🌸 Акция 8 марта" },
   { path: "/contacts", label: "Контакты" },
 ];
 
