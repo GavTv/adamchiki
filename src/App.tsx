@@ -11,6 +11,7 @@ import Hairdressing from "./pages/Hairdressing";
 import Cosmetology from "./pages/Cosmetology";
 import LPGMassage from "./pages/LPGMassage";
 import Promotions from "./pages/Promotions";
+import March8Promo from "./pages/March8Promo";
 import Contacts from "./pages/Contacts";
 import Prices from "./pages/Prices";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
