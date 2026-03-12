@@ -14,7 +14,7 @@ const Footer = () => {
               className="flex items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors"
             >
               <Phone size={16} />
-              +7 985 053 4761
+              +7 (985) 053-47-61
             </a>
             <a
               href="mailto:info@novobeauty.ru"
