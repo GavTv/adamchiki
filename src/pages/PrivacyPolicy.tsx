@@ -110,7 +110,7 @@ const PrivacyPolicy = () => {
               <li><strong>ИП:</strong> Гантамирова Зарема Джабраиловна</li>
               <li><strong>ИНН:</strong> 770301245304</li>
               <li><strong>Адрес:</strong> г. Москва, ул. Новослободская, д. 3, 3 этаж (БЦ Сафа)</li>
-              <li><strong>Телефон:</strong> +7 985 053 4761</li>
+              <li><strong>Телефон:</strong> +7 (985) 053-47-61</li>
               <li><strong>Email:</strong> info@novobeauty.ru</li>
             </ul>
           </section>
