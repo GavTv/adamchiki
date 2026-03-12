@@ -39,16 +39,18 @@ const March8Promo = () => {
       <div className="container py-12 md:py-20">
         {/* Hero */}
         <AnimatedSection className="max-w-2xl mx-auto text-center mb-14">
-          <HeroIcon icon={Flower2} />
-
-          <motion.h1
-            className="section-title mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            Акция 8 марта! 🌸
-          </motion.h1>
+          <div className="flex items-center justify-center gap-4">
+            <HeroIcon icon={Flower2} />
+            <motion.h1
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              Акция 8 марта! 🌸
+            </motion.h1>
+            <HeroIcon icon={Flower2} />
+          </div>
 
           <motion.p
             className="text-muted-foreground leading-relaxed text-lg"
