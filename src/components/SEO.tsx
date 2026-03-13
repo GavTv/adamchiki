@@ -15,7 +15,7 @@ const SEO = ({
   canonical,
   ogImage = "https://novobeauty.ru/og-image.jpg",
 }: SEOProps) => {
-  const fullTitle = title === "Главная" ? "Новобюти — Салон красоты премиум класса в Москве" : `${title} | Новобюти`;
+  const fullTitle = title === "Главная" ? "Новобьюти — Салон красоты премиум класса в Москве" : `${title} | Новобьюти`;
   const canonicalUrl = canonical || `https://novobeauty.ru${window.location.pathname}`;
 
   return (
