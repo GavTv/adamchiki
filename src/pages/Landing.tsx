@@ -18,7 +18,7 @@ const Landing = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BeautySalon",
-            "name": "Новобюти",
+            "name": "Новобьюти",
             "image": "https://novobeauty.ru/og-image.jpg",
             "url": "https://novobeauty.ru",
             "telephone": "+79850534761",
