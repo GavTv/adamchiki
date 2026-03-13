@@ -83,7 +83,7 @@ const Landing = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <span className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground">НОВОБЮТИ</span>
+        <span className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground">НОВОБЬЮТИ</span>
       </motion.header>
 
       {/* Main Content */}
