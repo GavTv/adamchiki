@@ -9,7 +9,7 @@ const Landing = () => {
     <div className="min-h-screen relative overflow-hidden flex flex-col">
       <SEO
         title="Главная"
-        description="Новобюти — салон красоты премиум класса в Москве на Новослободской. Косметология, парикмахерские услуги, LPG массаж, солярий."
+        description="Новобьюти — салон красоты премиум класса в Москве на Новослободской. Косметология, парикмахерские услуги, LPG массаж, солярий."
         keywords="салон красоты москва, косметология, парикмахерская, LPG массаж, солярий, Новослободская"
         canonical="https://novobeauty.ru/"
       />
@@ -18,7 +18,7 @@ const Landing = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BeautySalon",
-            "name": "Новобюти",
+            "name": "Новобьюти",
             "image": "https://novobeauty.ru/og-image.jpg",
             "url": "https://novobeauty.ru",
             "telephone": "+79850534761",
@@ -83,7 +83,7 @@ const Landing = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <span className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground">НОВОБЮТИ</span>
+        <span className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground">НОВОБЬЮТИ</span>
       </motion.header>
 
       {/* Main Content */}
@@ -165,7 +165,7 @@ const Landing = () => {
         transition={{ duration: 0.6, delay: 0.1 }}
       >
         <div className="flex flex-col items-center gap-1">
-          <span className="text-sm text-muted-foreground">© 2026 НОВОБЮТИ | Все права защищены</span>
+          <span className="text-sm text-muted-foreground">© 2026 НОВОБЬЮТИ | Все права защищены</span>
           <div className="flex items-center gap-3">
             <Link to="/privacy-policy" className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors">
               Политика конфиденциальности
