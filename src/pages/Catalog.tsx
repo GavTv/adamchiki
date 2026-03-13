@@ -19,7 +19,7 @@ const Catalog = () => {
     <div className="min-h-screen relative overflow-hidden flex flex-col">
       <SEO
         title="Каталог услуг"
-        description="Каталог услуг салона Novobeauty: солярий, парикмахерские услуги, косметология, LPG массаж. Полный прайс-лист и запись онлайн."
+        description="Каталог услуг салона Новобюти: солярий, парикмахерские услуги, косметология, LPG массаж. Полный прайс-лист и запись онлайн."
         keywords="каталог услуг салон красоты, солярий москва, парикмахерские услуги, косметология, LPG массаж, прайс-лист"
       />
       {/* Background image */}
@@ -57,7 +57,7 @@ const Catalog = () => {
           className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground hover:opacity-80 transition-opacity"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
-          NOVOBEAUTY
+          НОВОБЮТИ
         </Link>
       </motion.header>
 
@@ -114,7 +114,7 @@ const Catalog = () => {
         transition={{ duration: 0.6, delay: 0.1 }}
       >
         <span className="text-sm text-muted-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-          © 2026 NOVOBEAUTY | Все права защищены
+          © 2026 НОВОБЮТИ | Все права защищены
         </span>
       </motion.footer>
     </div>

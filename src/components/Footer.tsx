@@ -57,7 +57,7 @@ const Footer = () => {
 
         <div className="mt-6 pt-6 border-t border-border/50 text-center space-y-2">
           <p className="text-xs text-muted-foreground">
-            © {currentYear} Novobeauty. Все права защищены.
+            © {currentYear} Новобюти. Все права защищены.
           </p>
           <div className="flex items-center justify-center gap-4">
             <Link to="/privacy-policy" className="text-xs text-muted-foreground hover:text-foreground transition-colors">

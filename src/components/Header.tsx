@@ -10,7 +10,7 @@ const Header = () => {
           className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground hover:opacity-80 transition-opacity"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
-          NOVOBEAUTY
+          НОВОБЮТИ
         </Link>
 
         <Link 
