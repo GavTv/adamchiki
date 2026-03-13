@@ -9,7 +9,7 @@ const Landing = () => {
     <div className="min-h-screen relative overflow-hidden flex flex-col">
       <SEO
         title="Главная"
-        description="Novobeauty — салон красоты премиум класса в Москве на Новослободской. Косметология, парикмахерские услуги, LPG массаж, солярий."
+        description="Новобюти — салон красоты премиум класса в Москве на Новослободской. Косметология, парикмахерские услуги, LPG массаж, солярий."
         keywords="салон красоты москва, косметология, парикмахерская, LPG массаж, солярий, Новослободская"
         canonical="https://novobeauty.ru/"
       />
