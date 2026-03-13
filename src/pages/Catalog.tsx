@@ -57,7 +57,7 @@ const Catalog = () => {
           className="text-xl md:text-2xl font-medium tracking-[4px] uppercase text-foreground hover:opacity-80 transition-opacity"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
-          НОВОБЮТИ
+          НОВОБЬЮТИ
         </Link>
       </motion.header>
 
