@@ -31,7 +31,7 @@ const SEO = ({
       <meta property="og:type" content="website" />
       <meta property="og:image" content={ogImage} />
       <meta property="og:locale" content="ru_RU" />
-      <meta property="og:site_name" content="Новобюти" />
+      <meta property="og:site_name" content="Новобьюти" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />

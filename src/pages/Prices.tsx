@@ -182,7 +182,7 @@ const Prices = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            Полный прайс-лист на все услуги салона красоты НОВОБЮТИ
+            Полный прайс-лист на все услуги салона красоты НОВОБЬЮТИ
           </motion.p>
         </AnimatedSection>
 

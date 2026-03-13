@@ -114,7 +114,7 @@ const Catalog = () => {
         transition={{ duration: 0.6, delay: 0.1 }}
       >
         <span className="text-sm text-muted-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-          © 2026 НОВОБЮТИ | Все права защищены
+          © 2026 НОВОБЬЮТИ | Все права защищены
         </span>
       </motion.footer>
     </div>
