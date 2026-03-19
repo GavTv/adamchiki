@@ -40,7 +40,7 @@ const socialLinks = [
   },
   {
     name: "Telegram",
-    href: "https://t.me/Novobeauty",
+    href: "https://t.me/salonnovobeauty",
     icon: Send,
   },
 ];
