@@ -46,7 +46,7 @@ const Landing = () => {
             "priceRange": "₽₽",
             "sameAs": [
               "https://www.instagram.com/salon.novobeauty",
-              "https://t.me/Novobeauty"
+              "https://t.me/salonnovobeauty"
             ],
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
