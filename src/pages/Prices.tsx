@@ -262,6 +262,19 @@ const Prices = () => {
           <PriceSection title="Абонементы и комплексы" items={packages} icon={Zap} />
         </AnimatedSection>
 
+        {/* Маникюр и педикюр */}
+        <AnimatedSection delay={0.45} className="max-w-3xl mx-auto mb-12">
+          <h2 className="font-heading text-2xl text-foreground mb-6 flex items-center gap-3">
+            <Hand className="w-6 h-6 text-primary" />
+            Маникюр и педикюр
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <PriceSection title="Маникюр" items={manicureServices} icon={Sparkles} />
+            <PriceSection title="Педикюр" items={pedicureServices} icon={Hand} />
+          </div>
+          <PriceSection title="Наращивание и дизайн" items={extensionServices} icon={Sparkles} />
+        </AnimatedSection>
+
         {/* Info */}
         <AnimatedSection delay={0.5} className="max-w-2xl mx-auto text-center">
           <p className="text-sm text-muted-foreground bg-secondary/30 rounded-xl p-4 border border-border/20">
