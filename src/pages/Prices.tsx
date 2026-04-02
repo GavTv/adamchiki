@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import AnimatedSection from "@/components/AnimatedSection";
 import { motion } from "framer-motion";
-import { Sun, Scissors, Palette, Droplet, Sparkles, Eye, Heart, Zap } from "lucide-react";
+import { Sun, Scissors, Palette, Droplet, Sparkles, Eye, Heart, Zap, Hand } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 interface ServiceItem {
@@ -156,6 +156,28 @@ const packages = [
   { name: "10 сеансов LPG (30 мин) + 5 Кавитация", price: "15000 ₽" },
 ];
 
+// ========== МАНИКЮР И ПЕДИКЮР ==========
+const manicureServices = [
+  { name: "Маникюр без покрытия или с лечебным лаком (снятие не включено)", price: "1 000 ₽" },
+  { name: "Маникюр + выравнивание + покрытие гель-лаком (снятие входит)", price: "2 000 ₽" },
+  { name: "Маникюр + укрепление цветным камуфлирующим гелем (снятие входит)", price: "2 500 ₽" },
+  { name: "Маникюр + укрепление гелем + покрытие гель-лаком (снятие входит)", price: "3 000 ₽" },
+];
+
+const pedicureServices = [
+  { name: "Смарт-педикюр без покрытия (снятие входит)", price: "2 000 ₽" },
+  { name: "Смарт-педикюр с покрытием гель-лаком (снятие входит)", price: "2 900 ₽" },
+];
+
+const extensionServices = [
+  { name: "Наращивание ногтей цветным гелем + маникюр", price: "3 900 ₽" },
+  { name: "Наращивание ногтей + маникюр + покрытие гель-лаком", price: "4 300 ₽" },
+  { name: "Коррекция нарощенных ногтей (цветной гель) + маникюр", price: "3 500 ₽" },
+  { name: "Коррекция нарощенных ногтей + маникюр + покрытие гель-лаком", price: "3 900 ₽" },
+  { name: "Снятие нарощенных ногтей", price: "500 ₽" },
+  { name: "Дизайн (слайдер, втирка, кошачий глаз, стразы)", price: "от 50 ₽" },
+];
+
 const Prices = () => {
   return (
     <Layout>
@@ -238,6 +260,19 @@ const Prices = () => {
             <PriceSection title="Аппаратные процедуры" items={bodyServices} icon={Zap} />
           </div>
           <PriceSection title="Абонементы и комплексы" items={packages} icon={Zap} />
+        </AnimatedSection>
+
+        {/* Маникюр и педикюр */}
+        <AnimatedSection delay={0.45} className="max-w-3xl mx-auto mb-12">
+          <h2 className="font-heading text-2xl text-foreground mb-6 flex items-center gap-3">
+            <Hand className="w-6 h-6 text-primary" />
+            Маникюр и педикюр
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <PriceSection title="Маникюр" items={manicureServices} icon={Sparkles} />
+            <PriceSection title="Педикюр" items={pedicureServices} icon={Hand} />
+          </div>
+          <PriceSection title="Наращивание и дизайн" items={extensionServices} icon={Sparkles} />
         </AnimatedSection>
 
         {/* Info */}
