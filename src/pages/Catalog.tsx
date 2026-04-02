@@ -11,7 +11,7 @@ const menuItems = [
   { path: "/manicure", label: "Маникюр и педикюр" },
   { path: "/prices", label: "Цены" },
   { path: "/promotions", label: "Акции" },
-  { path: "/march8", label: "🌸 Акция 8 марта🌸" },
+  { path: "/contacts", label: "Контакты" },
   { path: "/contacts", label: "Контакты" },
 ];
 
