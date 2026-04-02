@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import AnimatedSection from "@/components/AnimatedSection";
 import { motion } from "framer-motion";
-import { Sun, Scissors, Palette, Droplet, Sparkles, Eye, Heart, Zap } from "lucide-react";
+import { Sun, Scissors, Palette, Droplet, Sparkles, Eye, Heart, Zap, Hand } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 interface ServiceItem {
