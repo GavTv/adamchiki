@@ -8,6 +8,7 @@ const menuItems = [
   { path: "/hairdressing", label: "Парикмахерские услуги" },
   { path: "/cosmetology", label: "Косметология" },
   { path: "/lpg-massage", label: "LPG массаж" },
+  { path: "/manicure", label: "Маникюр и педикюр" },
   { path: "/prices", label: "Цены" },
   { path: "/promotions", label: "Акции" },
   { path: "/march8", label: "🌸 Акция 8 марта🌸" },
