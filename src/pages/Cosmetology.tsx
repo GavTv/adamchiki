@@ -39,14 +39,14 @@ const waxEpilation = [
 ];
 
 const faceCare = [
-  { name: "Узи чистка", price: "от 2500 ₽" },
-  { name: "Комбинированная чистка", price: "от 3500 ₽" },
+  { name: "Узи чистка", price: "3000 ₽" },
+  { name: "Комбинированная чистка", price: "3500 ₽" },
   { name: "Механическая чистка", price: "4000 ₽" },
-  { name: "Аква Пилинг", price: "от 3500 ₽" },
+  { name: "Аква Пилинг", price: "4000 ₽" },
   { name: "Карбокситерапия", price: "от 3500 ₽" },
   { name: "Уход лица Angiopharm", price: "3500 ₽" },
   { name: "Уход ULTRACEUTICALS", price: "5500 ₽" },
-  { name: "Массаж лица", price: "от 2500 ₽" },
+  { name: "Массаж лица", price: "3000 ₽" },
 ];
 
 const Cosmetology = () => {
