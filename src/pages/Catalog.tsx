@@ -12,7 +12,6 @@ const menuItems = [
   { path: "/prices", label: "Цены" },
   { path: "/promotions", label: "Акции" },
   { path: "/contacts", label: "Контакты" },
-  { path: "/contacts", label: "Контакты" },
 ];
 
 const Catalog = () => {
