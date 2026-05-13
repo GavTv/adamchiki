@@ -43,10 +43,17 @@ const faceCare = [
   { name: "Комбинированная чистка", price: "3500 ₽" },
   { name: "Механическая чистка", price: "4000 ₽" },
   { name: "Аква Пилинг", price: "4000 ₽" },
-  { name: "Карбокситерапия", price: "от 3500 ₽" },
+  { name: "Карбокси-терапия", price: "3500 ₽" },
+  { name: "Алмазный пилинг лица", price: "3500 ₽" },
   { name: "Уход лица Angiopharm", price: "3500 ₽" },
   { name: "Уход ULTRACEUTICALS", price: "5500 ₽" },
   { name: "Массаж лица", price: "3000 ₽" },
+];
+
+const smasLifting = [
+  { name: "1 зона: периорбитальная зона, лоб, надбровная и височные области, подчелюстная зона или второй подбородок", price: "7000 ₽" },
+  { name: "Средняя и нижняя треть лица с подчелюстной зоной и зоной второго подбородка", price: "17 500 ₽" },
+  { name: "Лицо полностью с подчелюстной зоной и зоной второго подбородка", price: "22 500 ₽" },
 ];
 
 const Cosmetology = () => {
@@ -98,6 +105,10 @@ const Cosmetology = () => {
           
           <AnimatedSection delay={0.25}>
             <InteractiveServiceCard title="Уход за лицом" items={faceCare} icon={Heart} />
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.3}>
+            <InteractiveServiceCard title="SMAS-лифтинг" items={smasLifting} icon={Sparkles} />
           </AnimatedSection>
         </div>
 
