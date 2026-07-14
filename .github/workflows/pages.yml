@@ -33,6 +33,7 @@ jobs:
       - name: Prepare Pages files
         run: |
           touch dist/.nojekyll
+          cp CNAME dist/CNAME
 
       - uses: actions/upload-pages-artifact@v3
         with:
