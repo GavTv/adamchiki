@@ -65,7 +65,7 @@ const Footer = () => {
             </Link>
             <span className="text-muted-foreground/40">|</span>
             <Link to="/consent" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Согласие на обработку ПД
+              Согласие на обработку Персональных данных
             </Link>
           </div>
         </div>
