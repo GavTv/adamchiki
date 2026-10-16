@@ -9,6 +9,8 @@ import promoFaceCleaning from "@/assets/promo-face-cleaning.png";
 import promoLpg from "@/assets/promo-lpg.png";
 import promoBrows from "@/assets/promo-brows.png";
 import promoStudents from "@/assets/promo-students.png";
+import promoMassageStone from "@/assets/promo-massage-stone.jpg";
+import promoMassageManual from "@/assets/promo-massage-manual.jpg";
 
 const promotions = [
   {
@@ -38,6 +40,20 @@ const promotions = [
     title: "Акция для студентов — скидка 15%",
     description: "Коррекция бровей 500 ₽ • Окрашивание бровей 500 ₽ • Ламинирование бровей 2500 ₽ • Стрижка волос от 1400 ₽",
     badge: "Студентам",
+  },
+  {
+    id: 5,
+    image: promoMassageStone,
+    title: "Авторский ручной массаж + стоун-терапия",
+    description: "Всего 3500 ₽! Глубокое расслабление, восстановление и гармония тела. Снижает уровень стресса, расслабляет мышцы, улучшает кровообращение.",
+    badge: "Массаж",
+  },
+  {
+    id: 6,
+    image: promoMassageManual,
+    title: "Ручной массаж — 2500 ₽",
+    description: "Специальная цена до конца месяца! Успейте записаться на ручной массаж всего за 2500 ₽.",
+    badge: "Спеццена",
   },
 ];
 
