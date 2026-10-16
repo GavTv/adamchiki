@@ -204,7 +204,7 @@ const Promotions = () => {
         </div>
 
         <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-          <DialogContent className="max-w-lg p-0 overflow-hidden">
+          <DialogContent className="max-w-lg p-0 max-h-[90vh] overflow-y-auto">
             {active && (
               <>
                 <img src={active.image} alt={active.title} className="w-full aspect-square object-cover" />
