@@ -215,8 +215,26 @@ const Promotions = () => {
                   <DialogTitle className="font-heading text-2xl">{active.title}</DialogTitle>
                   {active.price && <p className="text-xl font-semibold text-primary">{active.price}</p>}
                   <DialogDescription className="text-muted-foreground leading-relaxed">
-                    {active.description}
+                    {active.intro ?? active.description}
                   </DialogDescription>
+                  {active.sections?.map((s) => (
+                    <div key={s.heading} className="pt-2">
+                      <h4 className="font-heading text-base text-foreground mb-2">{s.heading}</h4>
+                      <ul className="space-y-1.5">
+                        {s.items.map((it) => (
+                          <li key={it} className="flex gap-2 text-sm text-muted-foreground leading-relaxed">
+                            <span className="text-primary">•</span>
+                            <span>{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                  {active.note && (
+                    <p className="text-xs text-muted-foreground bg-secondary/40 rounded-xl p-3 border border-border/20">
+                      {active.note}
+                    </p>
+                  )}
                 </div>
               </>
             )}
