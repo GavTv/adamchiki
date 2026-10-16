@@ -9,6 +9,8 @@ import promoFaceCleaning from "@/assets/promo-face-cleaning.png";
 import promoLpg from "@/assets/promo-lpg.png";
 import promoBrows from "@/assets/promo-brows.png";
 import promoStudents from "@/assets/promo-students.png";
+import promoMassageStone from "@/assets/promo-massage-stone.jpg";
+import promoMassageManual from "@/assets/promo-massage-manual.jpg";
 
 const promotions = [
   {
