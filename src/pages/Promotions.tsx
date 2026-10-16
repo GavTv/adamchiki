@@ -64,6 +64,7 @@ const promotions: Promo[] = [
 ];
 
 const Promotions = () => {
+  const [active, setActive] = useState<Promo | null>(null);
   return (
     <Layout>
       <SEO
@@ -99,50 +100,64 @@ const Promotions = () => {
         <div className="grid sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {promotions.map((promo, index) => (
             <AnimatedSection key={promo.id} delay={index * 0.1}>
-              <motion.div
-                className="group relative overflow-hidden rounded-2xl bg-card border border-border/30 cursor-pointer"
+              <motion.button
+                type="button"
+                onClick={() => setActive(promo)}
+                className="group relative w-full text-left overflow-hidden rounded-2xl bg-card border border-border/30 cursor-pointer"
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative aspect-square overflow-hidden">
                   <motion.img
                     src={promo.image}
                     alt={promo.title}
+                    loading="lazy"
                     className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.5 }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
-                  {/* Badge */}
-                  <motion.span 
-                    className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
+                  <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground">
                     {promo.badge}
-                  </motion.span>
+                  </span>
+                  {promo.price && (
+                    <span className="absolute bottom-4 right-4 px-4 py-2 text-lg font-heading font-semibold rounded-full bg-background/80 backdrop-blur-sm text-foreground">
+                      {promo.price}
+                    </span>
+                  )}
                 </div>
-                
-                {/* Content */}
                 <div className="p-6">
                   <h3 className="font-heading text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
                     {promo.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     {promo.description}
                   </p>
+                  <span className="inline-block mt-3 text-sm text-primary">Подробнее →</span>
                 </div>
-                
-                {/* Hover gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              </motion.div>
+              </motion.button>
             </AnimatedSection>
           ))}
         </div>
+
+        <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
+          <DialogContent className="max-w-lg p-0 overflow-hidden">
+            {active && (
+              <>
+                <img src={active.image} alt={active.title} className="w-full aspect-square object-cover" />
+                <div className="p-6 space-y-3">
+                  <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground">
+                    {active.badge}
+                  </span>
+                  <DialogTitle className="font-heading text-2xl">{active.title}</DialogTitle>
+                  {active.price && <p className="text-xl font-semibold text-primary">{active.price}</p>}
+                  <DialogDescription className="text-muted-foreground leading-relaxed">
+                    {active.description}
+                  </DialogDescription>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Note */}
         <AnimatedSection delay={0.5} className="max-w-xl mx-auto mt-12 text-center">
