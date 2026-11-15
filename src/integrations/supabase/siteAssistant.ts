@@ -6,11 +6,7 @@ export interface AssistantInputMessage {
 }
 
 export async function askSiteAssistant(messages: AssistantInputMessage[]) {
-  // Keep local assistant conversations on the local Supabase Functions runtime.
-  // Production continues to use the configured Supabase project URL.
-  const url = import.meta.env.DEV
-    ? "http://127.0.0.1:54321"
-    : import.meta.env.VITE_SUPABASE_URL;
+  const url = import.meta.env.VITE_SUPABASE_URL;
   const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
   if (!url || !key) {

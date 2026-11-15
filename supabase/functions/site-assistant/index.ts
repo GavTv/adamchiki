@@ -2,7 +2,7 @@ import { assistantCatalog, businessInfo, findService, promotionSummaries } from 
 
 const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
 const OPENAI_BASE_URL = Deno.env.get("OPENAI_BASE_URL")?.trim().replace(/\/+$/, "") || "";
-const OPENAI_MODEL = Deno.env.get("OPENAI_MODEL") || "gpt-5.5";
+const OPENAI_MODEL = Deno.env.get("OPENAI_MODEL") || "gpt-6-sol";
 
 const allowedOrigins = new Set([
   "https://novobeauty.ru",
