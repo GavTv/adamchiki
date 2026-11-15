@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import * as Sentry from "@sentry/react";
 import { assistantCatalog } from "@/data/serviceCatalog";
 
 export interface AssistantInputMessage {
@@ -13,6 +14,16 @@ const isTransientFunctionError = (error: { name?: string; context?: unknown }) =
   const status = (error.context as { status?: unknown } | undefined)?.status;
   return typeof status === "number" && (status === 429 || status >= 500);
 };
+
+function reportAssistantFailure(error: { name?: string; context?: unknown }, outcome: "retrying" | "fallback") {
+  if (!import.meta.env.VITE_SENTRY_DSN) return;
+  const status = (error.context as { status?: unknown } | undefined)?.status;
+  Sentry.captureException(new Error("Site assistant request failed"), {
+    level: outcome === "fallback" ? "error" : "warning",
+    tags: { feature: "site-assistant", outcome, source: error.name ?? "unknown" },
+    extra: { httpStatus: typeof status === "number" ? status : undefined },
+  });
+}
 
 const recommendationFor = (id: string) => {
   const service = assistantCatalog.find((item) => item.id === id);
@@ -112,10 +123,13 @@ export async function askSiteAssistant(messages: AssistantInputMessage[]) {
     }
 
     if (attempt === 1 || !isTransientFunctionError(error)) {
-      const fallback = isTransientFunctionError(error) ? buildLocalFallback(messages) : null;
+      const transient = isTransientFunctionError(error);
+      if (transient) reportAssistantFailure(error, "fallback");
+      const fallback = transient ? buildLocalFallback(messages) : null;
       if (fallback) return fallback;
       throw error;
     }
+    reportAssistantFailure(error, "retrying");
     await new Promise((resolve) => window.setTimeout(resolve, 600));
   }
 
