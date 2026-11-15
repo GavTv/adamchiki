@@ -22,7 +22,7 @@ interface ChatMessage extends AssistantInputMessage {
 
 const greeting: ChatMessage = {
   role: "assistant",
-  content: "Здравствуйте! Я помогу разобраться в услугах и ценах Новобьюти. Расскажите, что вы хотите сделать — я уточню детали и подскажу подходящий вариант.",
+  content: "Привет! Я Никита — AI-помощник Новобьюти. Расскажи, что ты хочешь сделать, и я помогу выбрать подходящую услугу или категорию. Можешь спросить о процедурах, ценах и записи.",
 };
 
 const quickPrompts = ["Подобрать услугу", "Узнать цены", "Как записаться?"];
@@ -101,7 +101,7 @@ const SiteAssistant = () => {
     <div className="fixed bottom-5 right-4 z-[70] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
       {isOpen && (
         <section
-          aria-label="Чат-помощник Новобьюти"
+          aria-label="Чат с Никитой — AI-помощником Новобьюти"
           className="flex h-[min(72vh,640px)] w-[min(420px,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border/70 bg-background shadow-2xl"
           role="dialog"
           aria-modal="false"
@@ -112,8 +112,8 @@ const SiteAssistant = () => {
                 <Sparkles className="h-5 w-5" />
               </div>
               <div className="min-w-0">
-                <h2 className="font-heading text-lg font-semibold text-foreground">Помощник Новобьюти</h2>
-                <p className="text-xs text-muted-foreground">Подберу услугу и расскажу, как записаться</p>
+                <h2 className="font-heading text-lg font-semibold text-foreground">Никита — AI-помощник</h2>
+                <p className="text-xs text-muted-foreground">Новобьюти · помогу выбрать услугу</p>
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-1">
@@ -259,11 +259,10 @@ const SiteAssistant = () => {
         type="button"
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
-        aria-label={isOpen ? "Закрыть помощника" : "Чем я могу вам помочь?"}
-        className="flex min-h-14 items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        aria-label={isOpen ? "Закрыть чат" : "Открыть помощника Никиту"}
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary p-0 text-sm font-medium text-primary-foreground shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
         {isOpen ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
-        <span>{isOpen ? "Закрыть" : "Чем я могу вам помочь?"}</span>
       </button>
     </div>
   );
