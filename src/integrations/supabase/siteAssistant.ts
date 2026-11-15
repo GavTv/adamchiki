@@ -25,24 +25,49 @@ function reportAssistantFailure(error: { name?: string; context?: unknown }, out
   });
 }
 
-const recommendationFor = (id: string) => {
+const recommendationFor = (...ids: string[]) => ids.flatMap((id) => {
   const service = assistantCatalog.find((item) => item.id === id);
-  if (!service) return [];
-  return [{
+  return service ? [{
     id: service.id,
     name: service.name,
     price: service.price,
     route: service.route,
     pageTitle: service.pageTitle,
     bookingUrl: service.bookingUrl ?? null,
-  }];
+  }] : [];
+});
+
+const isExplicitCategoryQuery = (query: string) =>
+  /педик|маник|гель.?лак|ногт|соляр|загар|абонемент|бров|ресниц|lpg|лпг|массаж|кавитац|миостимуляц|smas|окраш|колор|мелир|блонд|тонир|косметолог|лиц|чистк|пилинг|эпиляц/iu.test(query);
+
+const localFallbackForCategory = (query: string) => {
+  const categories: Array<{ pattern: RegExp; ids: string[]; label: string }> = [
+    { pattern: /педик/iu, ids: ["pedicure-1", "pedicure-2"], label: "Педикюр" },
+    { pattern: /маник|гель.?лак|ногт/iu, ids: ["manicure-1", "manicure-2"], label: "Маникюр" },
+    { pattern: /соляр|загар|абонемент/iu, ids: /50\s*мин/iu.test(query) ? ["solarium-pass-1"] : ["solarium-minute-1", "solarium-pass-1"], label: "Солярий" },
+    { pattern: /бров|ресниц/iu, ids: ["brows-1", "brows-5"], label: "Услуги для бровей" },
+    { pattern: /lpg|лпг|массаж|кавитац|миостимуляц/iu, ids: /30\s*мин/iu.test(query) ? ["lpg-2"] : ["lpg-1"], label: "Массаж и аппаратные процедуры" },
+    { pattern: /smas/iu, ids: ["smas-1"], label: "SMAS-лифтинг" },
+    { pattern: /окраш|колор|мелир|блонд|тонир/iu, ids: ["hair-color-1"], label: "Окрашивание волос" },
+    { pattern: /косметолог|лиц|чистк|пилинг|эпиляц/iu, ids: ["face-care-1"], label: "Косметология" },
+  ];
+  const category = categories.find(({ pattern }) => pattern.test(query));
+  return category ? {
+    reply: `${category.label}: вот варианты из каталога с ценами и описаниями.`,
+    recommendations: recommendationFor(...category.ids),
+  } : null;
 };
 
 function buildLocalFallback(messages: AssistantInputMessage[]) {
   const context = messages.slice(-6).map(({ content }) => content.toLowerCase()).join(" ");
   const latestQuery = [...messages].reverse().find(({ role }) => role === "user")?.content.toLowerCase() ?? "";
-  const haircutIntent = /стриж|каре|волос/iu.test(context);
 
+  // Always honor a clearly stated current service before consulting earlier chat turns.
+  const categoryFallback = localFallbackForCategory(latestQuery);
+  if (categoryFallback) return categoryFallback;
+
+  const currentHaircutIntent = /стриж|каре|подстричь/iu.test(latestQuery);
+  const haircutIntent = currentHaircutIntent || (!isExplicitCategoryQuery(latestQuery) && /стриж|каре|подстричь/iu.test(context));
   if (haircutIntent && /реб[её]н|детск|сын|доч|малыш/iu.test(latestQuery)) {
     return {
       reply: "Детской стрижки нет в онлайн-каталоге. Уточнить, принимает ли мастер детей, можно у администратора по телефону +7 (985) 053-47-61.",
@@ -51,15 +76,15 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
   }
 
   if (haircutIntent) {
-    const wantsMen = /муж|мужчин|мужа|брата|отца|папу|парня/iu.test(context);
-    const wantsWomen = /жен|сест|девуш|жену|маму|доч/iu.test(context);
-    if (wantsMen) {
+    const wantsMen = /муж|мужчин|мужа|брата|отца|папу|парня/iu.test(latestQuery) || /муж|мужчин|мужа|брата|отца|папу|парня/iu.test(context);
+    const wantsWomen = /жен|сест|девуш|жену|маму|доч/iu.test(latestQuery) || /жен|сест|девуш|жену|маму|доч/iu.test(context);
+    if (wantsMen && !wantsWomen) {
       return {
         reply: "В каталоге есть мужская стрижка от 950 ₽. Точная стоимость зависит от формы и сложности; откройте карточку услуги, чтобы посмотреть детали.",
         recommendations: recommendationFor("haircut-1"),
       };
     }
-    if (wantsWomen) {
+    if (wantsWomen && !wantsMen) {
       return {
         reply: /сест/iu.test(context) && /каре/iu.test(context)
           ? "Для сестры с каре подойдёт услуга «Женские стрижки» от 1400 ₽. Точная стоимость зависит от длины, густоты и сложности работы."
@@ -69,22 +94,7 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
     }
     return {
       reply: "В каталоге есть мужские стрижки от 950 ₽ и женские от 1400 ₽. Уточните, пожалуйста, кому нужна стрижка — мужчине или женщине?",
-      recommendations: [...recommendationFor("haircut-1"), ...recommendationFor("haircut-2")],
-    };
-  }
-
-  const categoryFallbacks: Array<{ pattern: RegExp; serviceId: string; label: string }> = [
-    { pattern: /соляр|загар|абонемент/iu, serviceId: "solarium-minute-1", label: "солярия" },
-    { pattern: /маник|педик|ногт|гель.?лак/iu, serviceId: "manicure-1", label: "маникюра и педикюра" },
-    { pattern: /бров|ресниц/iu, serviceId: "brows-1", label: "оформления бровей" },
-    { pattern: /lpg|лпг|массаж|кавитац|миостимуляц/iu, serviceId: "lpg-1", label: "массажа и аппаратных процедур" },
-    { pattern: /косметолог|лиц|чистк|пилинг|эпиляц|smas/iu, serviceId: "face-care-1", label: "косметологии" },
-  ];
-  const category = categoryFallbacks.find(({ pattern }) => pattern.test(context));
-  if (category) {
-    return {
-      reply: `Я временно не смог получить ответ помощника, но могу показать раздел ${category.label} в каталоге сайта. Там указаны услуги и цены.`,
-      recommendations: recommendationFor(category.serviceId),
+      recommendations: recommendationFor("haircut-1", "haircut-2"),
     };
   }
 
