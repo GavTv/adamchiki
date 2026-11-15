@@ -1,10 +1,7 @@
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
-
-interface ServiceItem {
-  name: string;
-  price: string;
-}
+import ServiceItemButton from "@/components/ServiceItemButton";
+import type { ServiceItem } from "@/data/serviceCatalog";
 
 interface InteractiveServiceCardProps {
   title: string;
@@ -53,21 +50,16 @@ const InteractiveServiceCard = ({
           {items.map((item, index) => (
             <motion.li
               key={index}
-              className="flex justify-between items-baseline gap-4 text-sm py-3 border-b border-primary/20 last:border-0 group/item"
+              className="border-b border-primary/20 last:border-0"
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
             >
-              <span className="text-foreground/80 group-hover/item:text-foreground transition-colors duration-200">
-                {item.name}
-              </span>
-              <motion.span 
-                className="font-semibold text-primary whitespace-nowrap"
-                whileHover={{ scale: 1.05 }}
-              >
-                {item.price}
-              </motion.span>
+              <ServiceItemButton
+                item={item}
+                className="min-h-11 py-3 text-sm"
+              />
             </motion.li>
           ))}
         </ul>

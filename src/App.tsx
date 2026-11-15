@@ -18,6 +18,7 @@ import Prices from "./pages/Prices";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Consent from "./pages/Consent";
 import NotFound from "./pages/NotFound";
+import SiteAssistant from "@/components/SiteAssistant";
 
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/consent" element={<Consent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <SiteAssistant />
         </HashRouter>
       </TooltipProvider>
     </QueryClientProvider>

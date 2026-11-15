@@ -4,29 +4,13 @@ import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
 import InteractiveServiceCard from "@/components/InteractiveServiceCard";
+import { serviceCatalog } from "@/data/serviceCatalog";
 import { Sparkles, Hand } from "lucide-react";
 import { motion } from "framer-motion";
 
-const manicureServices = [
-  { name: "Маникюр без покрытия или с лечебным лаком (снятие не включено)", price: "1 000 ₽" },
-  { name: "Маникюр + выравнивание + покрытие гель-лаком (снятие входит)", price: "2 000 ₽" },
-  { name: "Маникюр + укрепление цветным камуфлирующим гелем (снятие входит)", price: "2 500 ₽" },
-  { name: "Маникюр + укрепление гелем + покрытие гель-лаком (снятие входит)", price: "3 000 ₽" },
-];
-
-const pedicureServices = [
-  { name: "Смарт-педикюр без покрытия (снятие входит)", price: "2 000 ₽" },
-  { name: "Смарт-педикюр с покрытием гель-лаком (снятие входит)", price: "2 900 ₽" },
-];
-
-const extensionServices = [
-  { name: "Наращивание ногтей цветным гелем + маникюр", price: "3 900 ₽" },
-  { name: "Наращивание ногтей + маникюр + покрытие гель-лаком", price: "4 300 ₽" },
-  { name: "Коррекция нарощенных ногтей (цветной гель) + маникюр", price: "3 500 ₽" },
-  { name: "Коррекция нарощенных ногтей + маникюр + покрытие гель-лаком", price: "3 900 ₽" },
-  { name: "Снятие нарощенных ногтей", price: "500 ₽" },
-  { name: "Дизайн (слайдер, втирка, кошачий глаз, стразы)", price: "от 50 ₽" },
-];
+const manicureServices = serviceCatalog.manicure.groups.manicure.items;
+const pedicureServices = serviceCatalog.manicure.groups.pedicure.items;
+const extensionServices = serviceCatalog.manicure.groups.extensions.items;
 
 const Manicure = () => {
   return (

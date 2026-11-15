@@ -4,6 +4,7 @@ import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
 import InteractiveServiceCard from "@/components/InteractiveServiceCard";
+import { serviceCatalog } from "@/data/serviceCatalog";
 import { Scissors, Palette, Droplet } from "lucide-react";
 import { motion } from "framer-motion";
 import {
@@ -13,32 +14,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Раздел 1: Стрижки и укладки
-const haircutServices = [
-  { name: "Мужские стрижки", price: "от 950 ₽" },
-  { name: "Женские стрижки", price: "от 1400 ₽" },
-  { name: "Укладки волос", price: "от 1500 ₽" },
-  { name: "Стрижка челки", price: "от 500 ₽" },
-  { name: "Прически/Косы", price: "от 2500 ₽" },
-];
-
-// Раздел 2: Окрашивание волос
-const coloringServices = [
-  { name: "Окрашивание волос", price: "от 2000 ₽" },
-  { name: "Тонирование", price: "от 2500 ₽" },
-  { name: "Блондирование", price: "от 2500 ₽" },
-  { name: "Мелирование", price: "от 3500 ₽" },
-  { name: "Сложное окрашивание (ambre, baloyash, airtouch)", price: "от 5500 ₽" },
-];
-
-// Подраздел: Уход за волосами
-const hairCareServices = [
-  { name: "Абсолютное счастье для волос от Lebel (Япония)", price: "от 5000 ₽" },
-  { name: "Ботокс волос (HONMA TOKIO)", price: "от 6500 ₽" },
-  { name: "Кератиновое выпрямление Nano Brazil", price: "от 6500 ₽" },
-  { name: "Ламинирование Constant Delight", price: "от 2500 ₽" },
-  { name: "Коллаген для волос Nano Brazil", price: "от 3000 ₽" },
-];
+const haircutServices = serviceCatalog.hairdressing.groups.haircuts.items;
+const coloringServices = serviceCatalog.hairdressing.groups.coloring.items;
+const hairCareServices = serviceCatalog.hairdressing.groups.care.items;
 
 const ServiceList = ({ items }: { items: { name: string; price: string }[] }) => (
   <div className="space-y-0">

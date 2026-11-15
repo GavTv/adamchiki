@@ -4,57 +4,15 @@ import BookButton from "@/components/BookButton";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIcon from "@/components/HeroIcon";
 import InteractiveServiceCard from "@/components/InteractiveServiceCard";
+import { serviceCatalog } from "@/data/serviceCatalog";
 import { Sparkles, Eye, Scissors, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 
-const eyebrows = [
-  { name: "Коррекция бровей", price: "500 ₽" },
-  { name: "Коррекция бровей (воск)", price: "700 ₽" },
-  { name: "Окрашивание бровей/ресниц (краской)", price: "500 ₽" },
-  { name: "Окрашивание бровей хной", price: "700 ₽" },
-  { name: "Ламинирование бровей", price: "2500 ₽" },
-];
-
-const facePeelings = [
-  { name: "Миндальный", price: "2000 ₽" },
-  { name: "Кислотный", price: "2500 ₽" },
-  { name: "Джесснер", price: "3000 ₽" },
-  { name: "BioRePeel, PRX", price: "4000 ₽" },
-];
-
-
-const waxEpilation = [
-  { name: "Усики", price: "200 ₽" },
-  { name: "Нос", price: "200 ₽" },
-  { name: "Губа", price: "200 ₽" },
-  { name: "Подбородок", price: "200 ₽" },
-  { name: "Лицо", price: "500 ₽" },
-  { name: "Подмышки", price: "600 ₽" },
-  { name: "Руки", price: "600 / 1000 ₽" },
-  { name: "Живот", price: "400 ₽" },
-  { name: "Спина", price: "800 ₽" },
-  { name: "Ноги", price: "600 / 1200 ₽" },
-  { name: "Зона бикини", price: "1200 ₽" },
-  { name: "Глубокое бикини", price: "2000 ₽" },
-];
-
-const faceCare = [
-  { name: "Узи чистка", price: "3000 ₽" },
-  { name: "Комбинированная чистка", price: "3500 ₽" },
-  { name: "Механическая чистка", price: "4000 ₽" },
-  { name: "Аква Пилинг", price: "4000 ₽" },
-  { name: "Карбокси-терапия", price: "3500 ₽" },
-  { name: "Алмазный пилинг лица", price: "3500 ₽" },
-  { name: "Уход лица Angiopharm", price: "3500 ₽" },
-  { name: "Уход ULTRACEUTICALS", price: "5500 ₽" },
-  { name: "Массаж лица", price: "3000 ₽" },
-];
-
-const smasLifting = [
-  { name: "1 зона: периорбитальная зона, лоб, надбровная и височные области, подчелюстная зона или второй подбородок", price: "7000 ₽" },
-  { name: "Средняя и нижняя треть лица с подчелюстной зоной и зоной второго подбородка", price: "17 500 ₽" },
-  { name: "Лицо полностью с подчелюстной зоной и зоной второго подбородка", price: "22 500 ₽" },
-];
+const eyebrows = serviceCatalog.cosmetology.groups.brows.items;
+const facePeelings = serviceCatalog.cosmetology.groups.peels.items;
+const waxEpilation = serviceCatalog.cosmetology.groups.waxing.items;
+const faceCare = serviceCatalog.cosmetology.groups.faceCare.items;
+const smasLifting = serviceCatalog.cosmetology.groups.smas.items;
 
 const Cosmetology = () => {
   return (
