@@ -7,6 +7,11 @@ export interface AssistantInputMessage {
   content: string;
 }
 
+export interface AssistantSource {
+  title: string;
+  url: string;
+}
+
 const isTransientFunctionError = (error: { name?: string; context?: unknown }) => {
   if (error.name === "FunctionsFetchError" || error.name === "FunctionsRelayError") return true;
   if (error.name !== "FunctionsHttpError") return false;
@@ -38,7 +43,7 @@ const recommendationFor = (...ids: string[]) => ids.flatMap((id) => {
 });
 
 const isExplicitCategoryQuery = (query: string) =>
-  /педик|маник|гель.?лак|ногт|соляр|загар|абонемент|бров|ресниц|lpg|лпг|массаж|кавитац|миостимуляц|smas|окраш|колор|мелир|блонд|тонир|косметолог|лиц|чистк|пилинг|эпиляц/iu.test(query);
+  /педик|маник|гель.?лак|ногт|соляр|загар|абонемент|бров|ресниц|lpg|лпг|массаж|кавитац|миостимуляц|smas|окраш|окрас|покрас|цвет.{0,12}волос|колор|мелир|блонд|тонир|косметолог|лиц|чистк|пилинг|эпиляц/iu.test(query);
 
 const localFallbackForCategory = (query: string) => {
   const categories: Array<{ pattern: RegExp; ids: string[]; label: string }> = [
@@ -48,13 +53,16 @@ const localFallbackForCategory = (query: string) => {
     { pattern: /бров|ресниц/iu, ids: ["brows-1", "brows-5"], label: "Услуги для бровей" },
     { pattern: /lpg|лпг|массаж|кавитац|миостимуляц/iu, ids: /30\s*мин/iu.test(query) ? ["lpg-2"] : ["lpg-1"], label: "Массаж и аппаратные процедуры" },
     { pattern: /smas/iu, ids: ["smas-1"], label: "SMAS-лифтинг" },
-    { pattern: /окраш|колор|мелир|блонд|тонир/iu, ids: ["hair-color-1"], label: "Окрашивание волос" },
+    { pattern: /окраш|окрас|покрас|цвет.{0,12}волос|колор|мелир|блонд|тонир/iu, ids: ["hair-color-1"], label: "Окрашивание волос" },
     { pattern: /косметолог|лиц|чистк|пилинг|эпиляц/iu, ids: ["face-care-1"], label: "Косметология" },
   ];
   const category = categories.find(({ pattern }) => pattern.test(query));
   return category ? {
-    reply: `${category.label}: вот варианты из каталога с ценами и описаниями.`,
+    reply: category.label === "Окрашивание волос"
+      ? "В каталоге есть окрашивание волос от 2 000 ₽. Итог зависит от длины, густоты, исходного цвета и техники. Вы хотите обновить оттенок или кардинально изменить цвет?"
+      : `${category.label}: вот варианты из каталога с ценами и описаниями.`,
     recommendations: recommendationFor(...category.ids),
+    sources: [],
   } : null;
 };
 
@@ -72,6 +80,7 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
     return {
       reply: "Детской стрижки нет в онлайн-каталоге. Уточнить, принимает ли мастер детей, можно у администратора по телефону +7 (985) 053-47-61.",
       recommendations: [],
+      sources: [],
     };
   }
 
@@ -82,6 +91,7 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
       return {
         reply: "В каталоге есть мужская стрижка от 950 ₽. Точная стоимость зависит от формы и сложности; откройте карточку услуги, чтобы посмотреть детали.",
         recommendations: recommendationFor("haircut-1"),
+        sources: [],
       };
     }
     if (wantsWomen && !wantsMen) {
@@ -90,11 +100,13 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
           ? "Для сестры с каре подойдёт услуга «Женские стрижки» от 1400 ₽. Точная стоимость зависит от длины, густоты и сложности работы."
           : "Подойдёт услуга «Женские стрижки» от 1400 ₽. Точная стоимость зависит от длины, густоты и сложности работы.",
         recommendations: recommendationFor("haircut-2"),
+        sources: [],
       };
     }
     return {
       reply: "В каталоге есть мужские стрижки от 950 ₽ и женские от 1400 ₽. Уточните, пожалуйста, кому нужна стрижка — мужчине или женщине?",
       recommendations: recommendationFor("haircut-1", "haircut-2"),
+      sources: [],
     };
   }
 
@@ -129,6 +141,7 @@ export async function askSiteAssistant(messages: AssistantInputMessage[]) {
           pageTitle: string;
           bookingUrl: string | null;
         }>;
+        sources?: AssistantSource[];
       };
     }
 

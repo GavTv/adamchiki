@@ -3,7 +3,7 @@ import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { LoaderCircle, MessageCircle, RotateCcw, Send, Sparkles, X } from "lucide-react";
 import { askSiteAssistant } from "@/integrations/supabase/siteAssistant";
-import type { AssistantInputMessage } from "@/integrations/supabase/siteAssistant";
+import type { AssistantInputMessage, AssistantSource } from "@/integrations/supabase/siteAssistant";
 import { businessInfo } from "@/data/serviceCatalog";
 
 interface Recommendation {
@@ -17,6 +17,7 @@ interface Recommendation {
 
 interface ChatMessage extends AssistantInputMessage {
   recommendations?: Recommendation[];
+  sources?: AssistantSource[];
   fallbackLink?: string;
 }
 
@@ -70,6 +71,7 @@ const SiteAssistant = () => {
           role: "assistant",
           content: result.reply,
           recommendations: result.recommendations ?? [],
+          sources: result.sources ?? [],
         },
       ]);
     } catch (error) {
@@ -190,6 +192,21 @@ const SiteAssistant = () => {
                       Написать в Telegram
                     </a>
                   )}
+
+                  {message.sources && message.sources.length > 0 && (
+                    <div className="w-full rounded-2xl border border-border/60 bg-background/70 px-4 py-3 text-xs text-muted-foreground">
+                      <p className="mb-1 font-medium text-foreground">Источники из интернета</p>
+                      <ul className="space-y-1">
+                        {message.sources.map((source) => (
+                          <li key={source.url}>
+                            <a href={source.url} target="_blank" rel="noopener noreferrer" className="underline decoration-primary/40 underline-offset-2 hover:text-primary">
+                              {source.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -249,7 +266,7 @@ const SiteAssistant = () => {
               </button>
             </form>
             <p className="mt-2 text-center text-[10px] leading-snug text-muted-foreground">
-              Сообщения обрабатываются OpenAI. Не отправляйте медицинские и платёжные данные.
+              Ответы могут использовать открытые веб-источники. Не отправляйте медицинские и платёжные данные.
             </p>
           </div>
         </section>
