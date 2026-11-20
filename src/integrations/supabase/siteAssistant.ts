@@ -7,6 +7,26 @@ export interface AssistantInputMessage {
   content: string;
 }
 
+export interface AssistantRecommendation {
+  id: string;
+  name: string;
+  price: string;
+  route: string;
+  pageTitle: string;
+  bookingUrl: string | null;
+}
+
+export interface AssistantCatalogLink {
+  label: string;
+  route: string;
+}
+
+export interface AssistantResult {
+  reply: string;
+  recommendations: AssistantRecommendation[];
+  catalogLink?: AssistantCatalogLink;
+}
+
 const isTransientFunctionError = (error: { name?: string; context?: unknown }) => {
   if (error.name === "FunctionsFetchError" || error.name === "FunctionsRelayError") return true;
   if (error.name !== "FunctionsHttpError") return false;
@@ -50,7 +70,52 @@ const recommendationForPattern = (pattern: RegExp, limit = 3) =>
     bookingUrl: service.bookingUrl ?? null,
   }));
 
-const localFallbackForCategory = (query: string) => {
+function buildHaircutOverview(query: string): AssistantResult | null {
+  const asksAboutHaircut = /стриж|подравнив|кончик|подстричь/iu.test(query);
+  if (!asksAboutHaircut) return null;
+
+  const asksForOptions = /жен|вариант|какие|список|все|что есть|подравнив|кончик/iu.test(query);
+  if (!asksForOptions) return null;
+
+  const womenHaircuts = assistantCatalog.filter((service) => /^стрижка женская/iu.test(service.name));
+  const trim = assistantCatalog.find((service) => /подравнив/iu.test(service.name));
+  const bangs = assistantCatalog.find((service) => /^ч[её]лка$/iu.test(service.name));
+  const asksToBookTrim = Boolean(trim && /подравнив|кончик/iu.test(query) && /запис|запиш|брон|времени|время/iu.test(query));
+  if (asksToBookTrim && trim) {
+    return {
+      reply: "Для подравнивания кончиков подходит «" + trim.name + "» — " + trim.price + (trim.duration ? ", " + trim.duration : "") + ". Нажмите кнопку ниже, чтобы выбрать время в DIKIDI.",
+      recommendations: [{
+        id: trim.id,
+        name: trim.name,
+        price: trim.price,
+        route: trim.route,
+        pageTitle: trim.pageTitle,
+        bookingUrl: trim.bookingUrl ?? null,
+      }],
+    };
+  }
+  const lines = womenHaircuts.map((service) =>
+    "• " + service.name.replace(/^Стрижка женская\s*/iu, "") + ": " + service.price + (service.duration ? " · " + service.duration : ""),
+  );
+
+  const reply = [
+    trim && /подравнив|кончик/iu.test(query)
+      ? "Для кончиков в каталоге есть отдельная услуга «" + trim.name + "» — " + trim.price + (trim.duration ? ", " + trim.duration : "") + "."
+      : null,
+    "Также доступны женские стрижки по длине волос:",
+    ...lines,
+    bangs ? "• " + bangs.name + ": " + bangs.price + (bangs.duration ? " · " + bangs.duration : "") : null,
+    "В карточке ниже — полный раздел стрижек, укладок и ухода за волосами. Напишите длину волос и хотите ли вы только убрать кончики или изменить форму — помогу сузить выбор.",
+  ].filter(Boolean).join("\n");
+
+  return {
+    reply,
+    recommendations: [],
+    catalogLink: { label: "Посмотреть все парикмахерские услуги", route: "/hairdressing" },
+  };
+}
+
+const localFallbackForCategory = (query: string): AssistantResult | null => {
   const categories: Array<{ pattern: RegExp; services: RegExp; label: string }> = [
     { pattern: /педик/iu, services: /педик/iu, label: "Педикюр" },
     { pattern: /маник|гель.?лак|ногт/iu, services: /маник|ногт|гель.?лак|френч|дизайн/iu, label: "Маникюр и услуги для ногтей" },
@@ -69,13 +134,16 @@ const localFallbackForCategory = (query: string) => {
     recommendations,
   } : null;
 };
-function buildLocalFallback(messages: AssistantInputMessage[]) {
+function buildLocalFallback(messages: AssistantInputMessage[]): AssistantResult | null {
   const context = messages.slice(-6).map(({ content }) => content.toLowerCase()).join(" ");
   const latestQuery = [...messages].reverse().find(({ role }) => role === "user")?.content.toLowerCase() ?? "";
 
   // Always honor a clearly stated current service before consulting earlier chat turns.
   const categoryFallback = localFallbackForCategory(latestQuery);
   if (categoryFallback) return categoryFallback;
+
+  const haircutOverview = buildHaircutOverview(latestQuery);
+  if (haircutOverview) return haircutOverview;
 
   const currentHaircutIntent = /стриж|каре|подстричь/iu.test(latestQuery);
   const haircutIntent = currentHaircutIntent || (!isExplicitCategoryQuery(latestQuery) && /стриж|каре|подстричь/iu.test(context));
@@ -106,7 +174,7 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
   return null;
 }
 
-export async function askSiteAssistant(messages: AssistantInputMessage[]) {
+export async function askSiteAssistant(messages: AssistantInputMessage[]): Promise<AssistantResult> {
   const url = import.meta.env.VITE_SUPABASE_URL;
   const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
@@ -124,17 +192,7 @@ export async function askSiteAssistant(messages: AssistantInputMessage[]) {
     });
 
     if (!error) {
-      const result = data as {
-        reply: string;
-        recommendations: Array<{
-          id: string;
-          name: string;
-          price: string;
-          route: string;
-          pageTitle: string;
-          bookingUrl: string | null;
-        }>;
-      };
+      const result = data as AssistantResult;
       return {
         ...result,
         recommendations: (result.recommendations ?? []).map((service) => ({

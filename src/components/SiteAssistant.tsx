@@ -15,8 +15,14 @@ interface Recommendation {
   bookingUrl: string | null;
 }
 
+interface CatalogLink {
+  label: string;
+  route: string;
+}
+
 interface ChatMessage extends AssistantInputMessage {
   recommendations?: Recommendation[];
+  catalogLink?: CatalogLink;
   fallbackLink?: string;
 }
 
@@ -70,6 +76,7 @@ const SiteAssistant = () => {
           role: "assistant",
           content: result.reply,
           recommendations: result.recommendations ?? [],
+          catalogLink: result.catalogLink,
         },
       ]);
     } catch (error) {
@@ -145,7 +152,7 @@ const SiteAssistant = () => {
               >
                 <div className={`max-w-[88%] space-y-2 ${message.role === "user" ? "items-end" : "items-start"}`}>
                   <div
-                    className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                    className={`whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                       message.role === "user"
                         ? "rounded-br-md bg-primary text-primary-foreground"
                         : "rounded-bl-md bg-secondary/70 text-foreground"
@@ -153,6 +160,16 @@ const SiteAssistant = () => {
                   >
                     {message.content}
                   </div>
+
+                  {message.catalogLink && (
+                    <Link
+                      to={message.catalogLink.route}
+                      onClick={() => setIsOpen(false)}
+                      className="inline-flex rounded-full border border-primary/20 px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/5"
+                    >
+                      {message.catalogLink.label}
+                    </Link>
+                  )}
 
                   {message.recommendations?.map((service) => (
                     <article key={service.id} className="w-full rounded-2xl border border-primary/20 bg-card p-4 shadow-sm">
