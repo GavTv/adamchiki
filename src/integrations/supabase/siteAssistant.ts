@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import * as Sentry from "@sentry/react";
-import { assistantCatalog } from "@/data/serviceCatalog";
+import { assistantCatalog, DIKIDI_BOOKING_URL } from "@/data/serviceCatalog";
 
 export interface AssistantInputMessage {
   role: "user" | "assistant";
@@ -121,7 +121,7 @@ export async function askSiteAssistant(messages: AssistantInputMessage[]) {
     });
 
     if (!error) {
-      return data as {
+      const result = data as {
         reply: string;
         recommendations: Array<{
           id: string;
@@ -131,6 +131,13 @@ export async function askSiteAssistant(messages: AssistantInputMessage[]) {
           pageTitle: string;
           bookingUrl: string | null;
         }>;
+      };
+      return {
+        ...result,
+        recommendations: (result.recommendations ?? []).map((service) => ({
+          ...service,
+          bookingUrl: service.bookingUrl ?? DIKIDI_BOOKING_URL,
+        })),
       };
     }
 

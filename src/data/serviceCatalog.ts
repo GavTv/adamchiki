@@ -1,3 +1,5 @@
+export const DIKIDI_BOOKING_URL = "https://dikidi.ru/#widget=223025";
+
 export interface ServiceItem {
   id: string;
   name: string;
@@ -246,6 +248,7 @@ export const assistantCatalog = Object.values(serviceCatalog).flatMap((page) =>
   Object.values(page.groups).flatMap((group) =>
     group.items.map((item) => ({
       ...item,
+      bookingUrl: item.bookingUrl ?? DIKIDI_BOOKING_URL,
       pageId: page.id,
       pageTitle: page.title,
       route: page.route,
@@ -286,7 +289,7 @@ export const assistantSiteKnowledge = {
     { title: "Контакты", route: "/contacts", details: "Салон находится примерно в двух минутах от метро «Новослободская»; рядом есть стоянка для автомобилей." },
   ],
   booking: {
-    onlineForm: "Кнопка «Онлайн-запись» открывает форму заявки. В ней выбирают направление, указывают имя, телефон и дату; салон затем связывается с клиентом по свободному времени. В форме доступны солярий, парикмахерские услуги, косметология и LPG.",
+    onlineForm: "Кнопка «Записаться» на сайте открывает виджет онлайн-записи DIKIDI. Клиент выбирает услугу или специалиста, доступное время и подтверждает запись в DIKIDI.",
     directContact: "Можно написать администратору в Telegram или позвонить по телефону. Не обещай, что запись оформлена, пока клиент сам не отправил заявку или не связался с салоном.",
     telegram: "https://t.me/salonnovobeauty",
     phone: "+7 (985) 053-47-61",

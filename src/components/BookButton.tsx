@@ -1,3 +1,5 @@
+import { DIKIDI_BOOKING_URL } from "@/data/serviceCatalog";
+
 interface BookButtonProps {
   className?: string;
 }
@@ -5,9 +7,7 @@ interface BookButtonProps {
 const BookButton = ({ className = "" }: BookButtonProps) => {
   return (
     <a
-      href="https://t.me/salonnovobeauty"
-      target="_blank"
-      rel="noopener noreferrer"
+      href={DIKIDI_BOOKING_URL}
       className={`btn-book ${className}`}
     >
       Записаться на приём

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import landingBg from "@/assets/landing-bg.jpg";
 import SEO from "@/components/SEO";
+import { DIKIDI_BOOKING_URL } from "@/data/serviceCatalog";
 
 const Landing = () => {
   return (
@@ -124,6 +125,17 @@ const Landing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
+            <a
+              href={DIKIDI_BOOKING_URL}
+              className="w-full max-w-xs px-8 py-4 rounded-full text-foreground/80 font-medium uppercase tracking-widest text-sm hover:opacity-80 transition-all duration-300 hover:scale-105"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                background: "rgba(200, 195, 185, 0.6)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+              }}
+            >
+              Записаться онлайн
+            </a>
             <Link
               to="/catalog"
               className="w-full max-w-xs px-8 py-4 rounded-full text-foreground/80 font-medium uppercase tracking-widest text-sm hover:opacity-80 transition-all duration-300 hover:scale-105"
