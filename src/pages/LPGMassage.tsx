@@ -88,9 +88,9 @@ const LPGMassage = () => {
         </AnimatedSection>
 
         {/* Packages */}
-        <AnimatedSection delay={0.4} className="max-w-2xl mx-auto mb-12">
+        {packages.length > 0 && <AnimatedSection delay={0.4} className="max-w-2xl mx-auto mb-12">
           <ServiceCard title="Абонементы и комплексы" items={packages} />
-        </AnimatedSection>
+        </AnimatedSection>}
 
         {/* Benefits */}
         <AnimatedSection delay={0.5} className="max-w-4xl mx-auto mb-12">

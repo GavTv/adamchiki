@@ -54,6 +54,7 @@ const ServiceItemButton = ({ item, className = "", delay = 0 }: ServiceItemButto
           </DialogDescription>
         </DialogHeader>
         <div className="rounded-xl bg-secondary/50 px-4 py-3 text-sm">
+          {item.duration && <p className="mb-2 text-muted-foreground">Длительность: {item.duration}</p>}
           <span className="text-muted-foreground">Стоимость: </span>
           <span className="font-semibold text-primary">{item.price}</span>
         </div>

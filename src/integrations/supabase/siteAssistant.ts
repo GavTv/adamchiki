@@ -40,26 +40,35 @@ const recommendationFor = (...ids: string[]) => ids.flatMap((id) => {
 const isExplicitCategoryQuery = (query: string) =>
   /педик|маник|гель.?лак|ногт|соляр|загар|абонемент|бров|ресниц|lpg|лпг|массаж|кавитац|миостимуляц|smas|окраш|окрас|покрас|цвет.{0,12}волос|колор|мелир|блонд|тонир|косметолог|лиц|чистк|пилинг|эпиляц/iu.test(query);
 
+const recommendationForPattern = (pattern: RegExp, limit = 3) =>
+  assistantCatalog.filter((service) => pattern.test(service.name)).slice(0, limit).map((service) => ({
+    id: service.id,
+    name: service.name,
+    price: service.price,
+    route: service.route,
+    pageTitle: service.pageTitle,
+    bookingUrl: service.bookingUrl ?? null,
+  }));
+
 const localFallbackForCategory = (query: string) => {
-  const categories: Array<{ pattern: RegExp; ids: string[]; label: string }> = [
-    { pattern: /педик/iu, ids: ["pedicure-1", "pedicure-2"], label: "Педикюр" },
-    { pattern: /маник|гель.?лак|ногт/iu, ids: ["manicure-1", "manicure-2"], label: "Маникюр" },
-    { pattern: /соляр|загар|абонемент/iu, ids: /50\s*мин/iu.test(query) ? ["solarium-pass-1"] : ["solarium-minute-1", "solarium-pass-1"], label: "Солярий" },
-    { pattern: /бров|ресниц/iu, ids: ["brows-1", "brows-5"], label: "Услуги для бровей" },
-    { pattern: /lpg|лпг|массаж|кавитац|миостимуляц/iu, ids: /30\s*мин/iu.test(query) ? ["lpg-2"] : ["lpg-1"], label: "Массаж и аппаратные процедуры" },
-    { pattern: /smas/iu, ids: ["smas-1"], label: "SMAS-лифтинг" },
-    { pattern: /окраш|окрас|покрас|цвет.{0,12}волос|колор|мелир|блонд|тонир/iu, ids: ["hair-color-1"], label: "Окрашивание волос" },
-    { pattern: /косметолог|лиц|чистк|пилинг|эпиляц/iu, ids: ["face-care-1"], label: "Косметология" },
+  const categories: Array<{ pattern: RegExp; services: RegExp; label: string }> = [
+    { pattern: /педик/iu, services: /педик/iu, label: "Педикюр" },
+    { pattern: /маник|гель.?лак|ногт/iu, services: /маник|ногт|гель.?лак|френч|дизайн/iu, label: "Маникюр и услуги для ногтей" },
+    { pattern: /бров|ресниц/iu, services: /бров|ресниц/iu, label: "Услуги для бровей и ресниц" },
+    { pattern: /lpg|лпг/iu, services: /lpg/iu, label: "LPG-массаж" },
+    { pattern: /кавитац|миостимуляц|rf|smas|смас/iu, services: /кавитац|миостимуляц|rf|smas/iu, label: "Аппаратные процедуры" },
+    { pattern: /массаж/iu, services: /массаж|банки/iu, label: "Массаж" },
+    { pattern: /окраш|окрас|покрас|цвет.{0,12}волос|колор|мелир|блонд|тонир/iu, services: /окраш|тонир|мелир|блонд|контуринг/iu, label: "Окрашивание волос" },
+    { pattern: /косметолог|лиц|чистк|пилинг|эпиляц|депиляц|карбокс/iu, services: /лиц|чистк|пилинг|депиляц|карбокс|уход для лица/iu, label: "Косметология и депиляция" },
   ];
   const category = categories.find(({ pattern }) => pattern.test(query));
-  return category ? {
-    reply: category.label === "Окрашивание волос"
-      ? "В каталоге есть окрашивание волос от 2 000 ₽. Итог зависит от длины, густоты, исходного цвета и техники. Вы хотите обновить оттенок или кардинально изменить цвет?"
-      : `${category.label}: вот варианты из каталога с ценами и описаниями.`,
-    recommendations: recommendationFor(...category.ids),
+  if (!category) return null;
+  const recommendations = recommendationForPattern(category.services, 4);
+  return recommendations.length ? {
+    reply: `${category.label}: показываю услуги и актуальные цены из каталога DIKIDI.`,
+    recommendations,
   } : null;
 };
-
 function buildLocalFallback(messages: AssistantInputMessage[]) {
   const context = messages.slice(-6).map(({ content }) => content.toLowerCase()).join(" ");
   const latestQuery = [...messages].reverse().find(({ role }) => role === "user")?.content.toLowerCase() ?? "";
@@ -71,32 +80,26 @@ function buildLocalFallback(messages: AssistantInputMessage[]) {
   const currentHaircutIntent = /стриж|каре|подстричь/iu.test(latestQuery);
   const haircutIntent = currentHaircutIntent || (!isExplicitCategoryQuery(latestQuery) && /стриж|каре|подстричь/iu.test(context));
   if (haircutIntent && /реб[её]н|детск|сын|доч|малыш/iu.test(latestQuery)) {
-    return {
-      reply: "Детской стрижки нет в онлайн-каталоге. Уточнить, принимает ли мастер детей, можно у администратора по телефону +7 (985) 053-47-61.",
-      recommendations: [],
-    };
+    const recommendations = recommendationForPattern(/детская стрижка/iu, 2);
+    return recommendations.length
+      ? { reply: "В каталоге есть детская стрижка. Актуальная цена и длительность указаны в карточке ниже.", recommendations }
+      : { reply: "Детская стрижка сейчас не указана в каталоге онлайн-записи. Уточнить у администратора можно по телефону +7 (985) 053-47-61.", recommendations: [] };
   }
 
   if (haircutIntent) {
     const wantsMen = /муж|мужчин|мужа|брата|отца|папу|парня/iu.test(latestQuery) || /муж|мужчин|мужа|брата|отца|папу|парня/iu.test(context);
     const wantsWomen = /жен|сест|девуш|жену|маму|доч/iu.test(latestQuery) || /жен|сест|девуш|жену|маму|доч/iu.test(context);
     if (wantsMen && !wantsWomen) {
-      return {
-        reply: "В каталоге есть мужская стрижка от 950 ₽. Точная стоимость зависит от формы и сложности; откройте карточку услуги, чтобы посмотреть детали.",
-        recommendations: recommendationFor("haircut-1"),
-      };
+      const recommendations = recommendationForPattern(/мужская стрижка/iu, 3);
+      return { reply: "Вот актуальные варианты мужских стрижек из каталога DIKIDI:", recommendations };
     }
     if (wantsWomen && !wantsMen) {
-      return {
-        reply: /сест/iu.test(context) && /каре/iu.test(context)
-          ? "Для сестры с каре подойдёт услуга «Женские стрижки» от 1400 ₽. Точная стоимость зависит от длины, густоты и сложности работы."
-          : "Подойдёт услуга «Женские стрижки» от 1400 ₽. Точная стоимость зависит от длины, густоты и сложности работы.",
-        recommendations: recommendationFor("haircut-2"),
-      };
+      const recommendations = recommendationForPattern(/женская стрижка/iu, 3);
+      return { reply: "Вот актуальные варианты женских стрижек из каталога DIKIDI:", recommendations };
     }
     return {
-      reply: "В каталоге есть мужские стрижки от 950 ₽ и женские от 1400 ₽. Уточните, пожалуйста, кому нужна стрижка — мужчине или женщине?",
-      recommendations: recommendationFor("haircut-1", "haircut-2"),
+      reply: "В каталоге есть мужские и женские стрижки. Уточните, пожалуйста, кому нужна стрижка — мужчине или женщине?",
+      recommendations: [...recommendationForPattern(/мужская стрижка/iu, 2), ...recommendationForPattern(/женская стрижка/iu, 2)],
     };
   }
 

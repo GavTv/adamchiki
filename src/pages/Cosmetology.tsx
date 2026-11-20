@@ -65,9 +65,9 @@ const Cosmetology = () => {
             <InteractiveServiceCard title="Уход за лицом" items={faceCare} icon={Heart} />
           </AnimatedSection>
 
-          <AnimatedSection delay={0.3}>
+          {smasLifting.length > 0 && <AnimatedSection delay={0.3}>
             <InteractiveServiceCard title="SMAS-лифтинг" items={smasLifting} icon={Sparkles} />
-          </AnimatedSection>
+          </AnimatedSection>}
         </div>
 
         {/* Info */}
